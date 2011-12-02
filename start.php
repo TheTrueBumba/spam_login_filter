@@ -25,7 +25,7 @@ function spam_login_filter_init() {
 	// Extend context menu with admin links
 	if (isadminloggedin()){
 		if (is_plugin_enabled('tracker')){
-			elgg_extend_view('profile/menu/adminlinks','spam_login_filter/adminlinks');
+			elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'spam_login_filter_hover_menu', 1000);
 			register_action("spam_login_filter/delete", false, dirname(__FILE__) . "/actions/delete.php", true);
 		}
 	}
@@ -36,7 +36,7 @@ function spam_login_filter_init() {
 function spam_login_filter_pagesetup() {
 	if (get_context() == 'admin' && isadminloggedin()) {
 		global $CONFIG;
-		add_submenu_item(elgg_echo('spam_login_filter:admin:manage_ips'), $CONFIG->wwwroot . 'pg/spam_login_filter/admin/');
+		add_submenu_item(elgg_echo('spam_login_filter:admin:manage_ips'), $CONFIG->wwwroot . 'spam_login_filter/admin/');
 	}
 }
 
@@ -53,7 +53,7 @@ function spam_login_filter_page_handler($page) {
 
 		$body = elgg_view_layout('two_column_left_sidebar', '', elgg_view_title($title) . $content);
 
-		page_draw($title, $body);
+		echo elgg_view_page(elgg_echo('spam_login_filter:admin:manage_ips'), $title . $body);
 
 		return TRUE;
 	}
@@ -313,6 +313,25 @@ function spam_login_filter_cron($hook, $entity_type, $returnvalue, $params){
 		}
 	}
 	elgg_set_ignore_access(false);
+}
+
+
+function spam_login_filter_hover_menu($hook, $type, $return, $params) {
+	global $CONFIG;
+	$user = $params['entity'];
+	
+	if($user->guid != get_loggedin_userid()){
+		$ts = time();
+		$token = generate_action_token($ts);
+	
+		$url = $CONFIG->url . "action/spam_login_filter/delete?guid={$user->guid}&__elgg_token=$token&__elgg_ts=$ts";
+		$item = new ElggMenuItem("spam_login_filter_delete", elgg_echo("spam_login_filter:delete_and_report"), $url);
+		$item->setSection('admin');
+	
+		$return[] = $item;
+	}
+	
+	return $return;
 }
 
 register_elgg_event_handler('init', 'system', 'spam_login_filter_init');

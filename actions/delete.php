@@ -78,7 +78,7 @@
 
 	// forward to user administration if on a user's page as it no longer exists
 	if ($deleted) {
-		$forward = "pg/admin/user/";
+		$forward = "admin/";
 	}
 
 	forward($forward);
