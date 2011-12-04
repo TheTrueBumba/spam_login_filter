@@ -19,7 +19,7 @@ function spam_login_filter_init() {
 	register_elgg_event_handler('pagesetup', 'system', 'spam_login_filter_pagesetup');
 	
 	if(get_plugin_setting("use_ip_blacklist_cache") == "yes"){
-		elgg_extend_view('register/extend', 'spam_login_filter/register', 100);
+		elgg_extend_view('forms/register', 'spam_login_filter/register', 100);
 	}
 	
 	// Extend context menu with admin links
