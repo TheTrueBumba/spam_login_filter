@@ -1,3 +1,4 @@
+<hr>
 <h3><?php echo elgg_echo('spam_login_filter:title_stopforumspam');?></h3>
 <?php 
     //Stopforumspam
@@ -7,13 +8,13 @@
 		<option value="yes" <?php if ($vars['entity']->use_stopforumspam == "yes") echo " selected=\"yes\" "; ?>>Yes</option>
 		<option value="no" <?php if ($vars['entity']->use_stopforumspam == "no") echo " selected=\"yes\" "; ?>>No</option>
     </select><br><br>
-
 <?php
 	echo elgg_echo('spam_login_filter:stopforumspam_api_key');
     echo elgg_view('input/text', array('internalname' => "params[stopforumspam_api_key]", 'value' => $vars['entity']->stopforumspam_api_key));
 	
 	echo "<br><br>";
 ?>
+<hr>
 <h3><?php echo elgg_echo('spam_login_filter:title_fassim');?></h3>
 <?php 
     //Fassim
@@ -90,6 +91,7 @@
 
 	echo "<br><br>";
 ?>
+<hr>
 <h3><?php echo elgg_echo('spam_login_filter:title_domain_blacklist');?></h3>
 <?php	
 	//Domain blacklist
@@ -105,6 +107,7 @@
 
 	echo "<br><br>";
 ?>
+<hr>
 <h3><?php echo elgg_echo('spam_login_filter:title_email_blacklist');?></h3>
 <?php	
 	//Email blacklist
@@ -120,6 +123,7 @@
 
 	echo "<br><br>";
 ?>
+<hr>
 <h3><?php echo elgg_echo('spam_login_filter:title_plugin_notifications');?></h3>
 <?php
 	//Notify by mail
@@ -136,7 +140,7 @@
 	
 	echo "<br><br>";
 ?>
-
+<hr>
 <h3><?php echo elgg_echo('spam_login_filter:title_ip_blacklist');?></h3>
 <?php
 	echo elgg_echo('spam_login_filter:use_ip_blacklist_cache_description');
