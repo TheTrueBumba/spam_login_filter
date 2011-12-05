@@ -1,3 +1,4 @@
+<hr>
 <h3><?php echo elgg_echo('spam_login_filter:title_stopforumspam');?></h3>
 <?php 
     //Stopforumspam
@@ -13,6 +14,7 @@
 	
 	echo "<br><br>";
 ?>
+<hr>
 <h3><?php echo elgg_echo('spam_login_filter:title_fassim');?></h3>
 <?php 
     //Fassim
@@ -89,6 +91,7 @@
 
 	echo "<br><br>";
 ?>
+<hr>
 <h3><?php echo elgg_echo('spam_login_filter:title_domain_blacklist');?></h3>
 <?php	
 	//Domain blacklist
@@ -104,6 +107,7 @@
 
 	echo "<br><br>";
 ?>
+<hr>
 <h3><?php echo elgg_echo('spam_login_filter:title_email_blacklist');?></h3>
 <?php	
 	//Email blacklist
@@ -119,6 +123,7 @@
 
 	echo "<br><br>";
 ?>
+<hr>
 <h3><?php echo elgg_echo('spam_login_filter:title_plugin_notifications');?></h3>
 <?php
 	//Notify by mail
@@ -135,7 +140,7 @@
 	
 	echo "<br><br>";
 ?>
-
+<hr>
 <h3><?php echo elgg_echo('spam_login_filter:title_ip_blacklist');?></h3>
 <?php
 	echo elgg_echo('spam_login_filter:use_ip_blacklist_cache_description');
