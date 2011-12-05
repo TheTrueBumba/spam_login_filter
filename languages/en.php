@@ -12,7 +12,7 @@
 		'spam_login_filter:delete_and_report' => "Delete and report as spammer",
 		
 		//Admin menu
-		'spam_login_filter:admin:manage_ips' => "Manage blocked IPs",
+		'admin:administer_utilities:manageip' => "Manage blocked IPs",
 		'spam_login_filter:admin:ip_date_created' => 'Created %s',
 		'spam_login_filter:admin:delete_ip' => 'Delete',
 		'spam_login_filter:admin:confirm_delete_ip' => 'Delete %s?',

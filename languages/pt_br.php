@@ -12,7 +12,7 @@
 		'spam_login_filter:delete_and_report' => "Apagar e denunciar como spammer",
 		
 		//Admin menu
-		'spam_login_filter:admin:manage_ips' => "Gerenciar IPs bloqueados",
+		'admin:administer_utilities:manageip' => "Gerenciar IPs bloqueados",
 		'spam_login_filter:admin:ip_date_created' => 'Criado %s',
 		'spam_login_filter:admin:delete_ip' => 'Excluir',
 		'spam_login_filter:admin:confirm_delete_ip' => 'Excluir %s?',

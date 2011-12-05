@@ -7,14 +7,16 @@
 
 function spam_login_filter_init() {
 	global $CONFIG;
+	$action_path = elgg_get_plugins_path() . "spam_login_filter/actions/spam_login_filter";
 	
-	register_plugin_hook("action", "register", "spam_login_filter_verify_action_hook", 999);
+	elgg_register_plugin_hook_handler("action", "register", "spam_login_filter_verify_action_hook", 999);
 	
-	register_plugin_hook('cron', 'daily', 'spam_login_filter_cron');
+	elgg_register_plugin_hook_handler('cron', 'daily', 'spam_login_filter_cron');
 	
-	register_page_handler('spam_login_filter', 'spam_login_filter_page_handler');
+	elgg_register_page_handler('spam_login_filter', 'spam_login_filter_page_handler');
 	
-	register_action('spam_login_filter/delete_ip', false, dirname(__FILE__) .  "/actions/delete_ip.php", true);
+	//elgg_register_action('spam_login_filter/delete_ip', false, dirname(__FILE__) .  "/actions/delete_ip.php", true);
+	elgg_register_action('spam_login_filter/delete_ip', "$action_path/delete_ip.php", 'admin');
 	
 	register_elgg_event_handler('pagesetup', 'system', 'spam_login_filter_pagesetup');
 	
@@ -26,7 +28,7 @@ function spam_login_filter_init() {
 	if (isadminloggedin()){
 		if (is_plugin_enabled('tracker')){
 			elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'spam_login_filter_hover_menu', 1000);
-			register_action("spam_login_filter/delete", false, dirname(__FILE__) . "/actions/delete.php", true);
+			elgg_register_action("spam_login_filter/delete", false, dirname(__FILE__) . "/actions/delete.php", true);
 		}
 	}
 	
@@ -34,10 +36,11 @@ function spam_login_filter_init() {
 }
 
 function spam_login_filter_pagesetup() {
-	if (get_context() == 'admin' && isadminloggedin()) {
+	//if (get_context() == 'admin' && isadminloggedin()) {
 		global $CONFIG;
-		add_submenu_item(elgg_echo('spam_login_filter:admin:manage_ips'), $CONFIG->wwwroot . 'spam_login_filter/admin/');
-	}
+		//add_submenu_item(elgg_echo('spam_login_filter:admin:manage_ips'), $CONFIG->wwwroot . 'spam_login_filter/admin/');
+		elgg_register_admin_menu_item('administer', 'manageip', 'administer_utilities');
+	//}
 }
 
 function spam_login_filter_page_handler($page) {
@@ -98,7 +101,8 @@ function spam_login_filter_verify_action_hook($hook, $entity_type, $returnvalue,
 		
 		elgg_set_ignore_access(false);
 
-		return false;
+		//return false;
+		forward();
 	}
 }
 
@@ -125,7 +129,7 @@ function validateUser($register_email,$register_ip){
 	
 	//Mail domain blacklist
 	if(get_plugin_setting("use_mail_domain_blacklist") == "yes"){
-		$blacklistedMailDomains = preg_split('/\\s+/', get_plugin_setting("blacklisted_mail_domains"), -1, PREG_SPLIT_NO_EMPTY);
+		$blacklistedMailDomains = preg_split('/\\s+/', customStripTags(get_plugin_setting("blacklisted_mail_domains")), -1, PREG_SPLIT_NO_EMPTY);
 		$mailDomain = explode("@", $register_email);
 		
 		foreach ($blacklistedMailDomains as $domain) {
@@ -142,7 +146,7 @@ function validateUser($register_email,$register_ip){
 	{
 		//Mail blacklist
 		if(get_plugin_setting("use_mail_blacklist") == "yes"){
-			$blacklistedMails = preg_split('/\\s+/', get_plugin_setting("blacklisted_mails"), -1, PREG_SPLIT_NO_EMPTY);
+			$blacklistedMails = preg_split('/\\s+/', customStripTags(get_plugin_setting("blacklisted_mails")), -1, PREG_SPLIT_NO_EMPTY);
 			
 			foreach ($blacklistedMails as $blacklistedMail) {
 				if ($blacklistedMail == $register_email) {
@@ -332,6 +336,13 @@ function spam_login_filter_hover_menu($hook, $type, $return, $params) {
 	}
 	
 	return $return;
+}
+
+function customStripTags($content) {
+	$searchSpaces = array(' ', '&nbsp;');
+	$content = str_replace($searchSpaces, '', $content);
+	$content = strip_tags($content);
+	return $content;
 }
 
 register_elgg_event_handler('init', 'system', 'spam_login_filter_init');

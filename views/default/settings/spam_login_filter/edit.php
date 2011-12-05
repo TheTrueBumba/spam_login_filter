@@ -7,7 +7,6 @@
 		<option value="yes" <?php if ($vars['entity']->use_stopforumspam == "yes") echo " selected=\"yes\" "; ?>>Yes</option>
 		<option value="no" <?php if ($vars['entity']->use_stopforumspam == "no") echo " selected=\"yes\" "; ?>>No</option>
     </select><br><br>
-
 <?php
 	echo elgg_echo('spam_login_filter:stopforumspam_api_key');
     echo elgg_view('input/text', array('internalname' => "params[stopforumspam_api_key]", 'value' => $vars['entity']->stopforumspam_api_key));
