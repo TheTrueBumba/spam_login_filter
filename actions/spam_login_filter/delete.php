@@ -13,14 +13,14 @@
 	$username = $obj->username;
 	$email = $obj->email;
 	$ip_address = $obj->ip_address;
-	$api_key = get_plugin_setting('stopforumspam_api_key', 'spam_login_filter');
+	$api_key = elgg_get_plugin_setting('stopforumspam_api_key', 'spam_login_filter');
 	
 	if (empty($ip_address)){
 		register_error(elgg_echo('spam_login_filter:empty_ip_error'));
 		forward($forward);
 	}
 	else {
-		if(get_plugin_setting("use_ip_blacklist_cache") == "yes"){
+		if(elgg_get_plugin_setting("use_ip_blacklist_cache") == "yes"){
 			// Blacklist the IP
 			//Check if the ip exists			
 			$options = array(
