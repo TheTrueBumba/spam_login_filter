@@ -11,4 +11,9 @@
 		<type>elgg_release</type>
 		<version>1.8</version>
 	</requires>
+	<requires>
+		<type>plugin</type>
+		<name>tracker</name>
+		<version>1.8b</version>
+	</requires>
 </plugin_manifest>

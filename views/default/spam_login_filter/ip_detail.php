@@ -13,8 +13,8 @@ $delete = elgg_view('output/confirmlink', array(
 	'text' => elgg_echo('spam_login_filter:admin:delete_ip')
 ));
 
-if (is_plugin_enabled('tracker')){
-	$tracker_url = sprintf(get_plugin_setting('tracker_url', 'tracker'), $spam_login_filter_ip->ip_address);
+if (elgg_is_active_plugin('tracker')){
+	$tracker_url = sprintf(elgg_get_plugin_setting('tracker_url', 'tracker'), $spam_login_filter_ip->ip_address);
 	// Create tracker link
 	$tracker_link = "<a href=\"$tracker_url\" target=\"_blank\" title=\"" . elgg_echo('tracker:moreinfo') . "\" />" . elgg_echo('tracker:info') . "</a>";
 }

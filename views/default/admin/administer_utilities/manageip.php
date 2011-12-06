@@ -9,12 +9,8 @@
 		'offset' => $offset,
 		'count' => TRUE,
 	);
-
-	//elgg_set_ignore_access(true);
 		
 	$spam_login_filter_ip_list = elgg_get_entities($options);
-
-	//elgg_set_ignore_access(false);
 
 	if (!$count = elgg_get_entities($options)) {
 		echo elgg_view('page/elements/wrapper', array(
