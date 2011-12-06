@@ -15,18 +15,17 @@ function spam_login_filter_init() {
 	
 	elgg_register_page_handler('spam_login_filter', 'spam_login_filter_page_handler');
 	
-	//elgg_register_action('spam_login_filter/delete_ip', false, dirname(__FILE__) .  "/actions/delete_ip.php", true);
 	elgg_register_action('spam_login_filter/delete_ip', "$action_path/delete_ip.php", 'admin');
 	
 	register_elgg_event_handler('pagesetup', 'system', 'spam_login_filter_pagesetup');
 	
-	if(get_plugin_setting("use_ip_blacklist_cache") == "yes"){
+	if(elgg_get_plugin_setting("use_ip_blacklist_cache") == "yes"){
 		elgg_extend_view('forms/register', 'spam_login_filter/register', 100);
 	}
 	
 	// Extend context menu with admin links
 	if (isadminloggedin()){
-		if (is_plugin_enabled('tracker')){
+		if (elgg_is_active_plugin('tracker')){
 			elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'spam_login_filter_hover_menu', 1000);
 			elgg_register_action("spam_login_filter/delete", false, dirname(__FILE__) . "/actions/delete.php", true);
 		}
@@ -36,11 +35,9 @@ function spam_login_filter_init() {
 }
 
 function spam_login_filter_pagesetup() {
-	//if (get_context() == 'admin' && isadminloggedin()) {
-		global $CONFIG;
-		//add_submenu_item(elgg_echo('spam_login_filter:admin:manage_ips'), $CONFIG->wwwroot . 'spam_login_filter/admin/');
-		elgg_register_admin_menu_item('administer', 'manageip', 'administer_utilities');
-	//}
+	global $CONFIG;
+
+	elgg_register_admin_menu_item('administer', 'manageip', 'administer_utilities');
 }
 
 function spam_login_filter_page_handler($page) {
@@ -91,11 +88,9 @@ function spam_login_filter_verify_action_hook($hook, $entity_type, $returnvalue,
 			//Create the banned ip
 			$ip = new ElggObject();
 			$ip->subtype = 'spam_login_filter_ip';
-			//$ip->access_id = ACCESS_PUBLIC;
 			$ip->access_id = ACCESS_PRIVATE;
 			$ip->ip_address = $_SERVER['REMOTE_ADDR'];
 			$ip->owner_guid = $CONFIG->site_id;
-			//$ip->owner_guid = elgg_get_site_entity()->getGUID() //1.8 only
 			$ip->save();
 		}
 		
@@ -107,7 +102,7 @@ function spam_login_filter_verify_action_hook($hook, $entity_type, $returnvalue,
 }
 
 function spam_login_filter_notify_admin($blockedEmail, $blockedIp, $reason) {
-	if(get_plugin_setting("notify_by_mail") == "yes"){
+	if(elgg_get_plugin_setting("notify_by_mail") == "yes"){
 		//Notify spam tentative to administrator
 		global $CONFIG;
 		$site = get_entity($CONFIG->site_guid);
@@ -119,7 +114,7 @@ function spam_login_filter_notify_admin($blockedEmail, $blockedIp, $reason) {
 
 		$message = sprintf(elgg_echo('spam_login_filter:notify_message'), $blockedEmail, $blockedIp, $reason);
 
-		elgg_send_email($from, get_plugin_setting("notify_mail_address"), elgg_echo('spam_login_filter:notify_subject'), $message);
+		elgg_send_email($from, elgg_get_plugin_setting("notify_mail_address"), elgg_echo('spam_login_filter:notify_subject'), $message);
 	}		
 }
 
@@ -128,8 +123,8 @@ function validateUser($register_email,$register_ip){
 	$spammer = false;
 	
 	//Mail domain blacklist
-	if(get_plugin_setting("use_mail_domain_blacklist") == "yes"){
-		$blacklistedMailDomains = preg_split('/\\s+/', customStripTags(get_plugin_setting("blacklisted_mail_domains")), -1, PREG_SPLIT_NO_EMPTY);
+	if(elgg_get_plugin_setting("use_mail_domain_blacklist") == "yes"){
+		$blacklistedMailDomains = preg_split('/\\s+/', customStripTags(elgg_get_plugin_setting("blacklisted_mail_domains")), -1, PREG_SPLIT_NO_EMPTY);
 		$mailDomain = explode("@", $register_email);
 		
 		foreach ($blacklistedMailDomains as $domain) {
@@ -145,8 +140,8 @@ function validateUser($register_email,$register_ip){
 	if ($spammer != true)
 	{
 		//Mail blacklist
-		if(get_plugin_setting("use_mail_blacklist") == "yes"){
-			$blacklistedMails = preg_split('/\\s+/', customStripTags(get_plugin_setting("blacklisted_mails")), -1, PREG_SPLIT_NO_EMPTY);
+		if(elgg_get_plugin_setting("use_mail_blacklist") == "yes"){
+			$blacklistedMails = preg_split('/\\s+/', customStripTags(elgg_get_plugin_setting("blacklisted_mails")), -1, PREG_SPLIT_NO_EMPTY);
 			
 			foreach ($blacklistedMails as $blacklistedMail) {
 				if ($blacklistedMail == $register_email) {
@@ -162,7 +157,7 @@ function validateUser($register_email,$register_ip){
 	if ($spammer != true)
 	{
 		//StopForumSpam
-		if(get_plugin_setting("use_stopforumspam") == "yes"){
+		if(elgg_get_plugin_setting("use_stopforumspam") == "yes"){
 
 			//check the e-mail adress
 			$url = "http://www.stopforumspam.com/api?email=".$register_email."&f=serial";
@@ -201,15 +196,15 @@ function validateUser($register_email,$register_ip){
 	
 	if ($spammer != true){
 		//Fassim
-		if(get_plugin_setting("use_fassim") == "yes"){
-			$fassim_api_key = get_plugin_setting("fassim_api_key");
-			$fassim_check_email = get_plugin_setting("fassim_check_email");
-			$fassim_check_ip = get_plugin_setting("fassim_check_ip");
-			$fassim_block_proxies = get_plugin_setting("fassim_block_proxies");			
-			$fassim_block_top_spamming_isps = get_plugin_setting("fassim_block_top_spamming_isps");
-			$fassim_block_top_spamming_domains = get_plugin_setting("fassim_block_top_spamming_domains");			
-			$fassim_blocked_country_list = get_plugin_setting("fassim_blocked_country_list");
-			$fassim_blocked_region_list = get_plugin_setting("fassim_blocked_region_list");
+		if(elgg_get_plugin_setting("use_fassim") == "yes"){
+			$fassim_api_key = elgg_get_plugin_setting("fassim_api_key");
+			$fassim_check_email = elgg_get_plugin_setting("fassim_check_email");
+			$fassim_check_ip = elgg_get_plugin_setting("fassim_check_ip");
+			$fassim_block_proxies = elgg_get_plugin_setting("fassim_block_proxies");			
+			$fassim_block_top_spamming_isps = elgg_get_plugin_setting("fassim_block_top_spamming_isps");
+			$fassim_block_top_spamming_domains = elgg_get_plugin_setting("fassim_block_top_spamming_domains");			
+			$fassim_blocked_country_list = elgg_get_plugin_setting("fassim_blocked_country_list");
+			$fassim_blocked_region_list = elgg_get_plugin_setting("fassim_blocked_region_list");
 			
 			if (!empty($fassim_api_key) && preg_match('/^[0-9a-z]{8}(-[0-9a-z]{4}){3}-[0-9a-z]{12}$/i', $fassim_api_key)) {
 
