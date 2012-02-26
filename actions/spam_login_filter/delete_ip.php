@@ -5,7 +5,7 @@
 
 	if (!$spam_login_filter_ip_list) {
 		register_error(elgg_echo('spam_login_filter:errors:unknown_ips'));
-		forward(REFERRER);
+		forward('admin/administer_utilities/manageip');
 	}
 
 	$access = access_get_show_hidden_status();
@@ -36,4 +36,4 @@
 		system_message($message_txt);
 	}
 
-	forward(REFERRER);
+	forward('admin/administer_utilities/manageip');

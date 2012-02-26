@@ -27,7 +27,8 @@ function spam_login_filter_init() {
 	if (isadminloggedin()){
 		if (elgg_is_active_plugin('tracker')){
 			elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'spam_login_filter_hover_menu', 1000);
-			elgg_register_action("spam_login_filter/delete", false, dirname(__FILE__) . "/actions/delete.php", true);
+			//elgg_register_action("spam_login_filter/delete", false, "$action_path/delete.php", true);
+			elgg_register_action("spam_login_filter/delete", "$action_path/delete.php", "admin");
 		}
 	}
 	
@@ -319,7 +320,7 @@ function spam_login_filter_hover_menu($hook, $type, $return, $params) {
 	global $CONFIG;
 	$user = $params['entity'];
 	
-	if($user->guid != get_loggedin_userid()){
+	if($user->guid != elgg_get_logged_in_user_guid()){
 		$ts = time();
 		$token = generate_action_token($ts);
 	

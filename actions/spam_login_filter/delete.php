@@ -30,40 +30,46 @@
 				"metadata_values" => $ip_address,
 				"count" => TRUE
 			);
-			
+
 			elgg_set_ignore_access(true);
 			
 			$spam_login_filter_ip_list = elgg_get_entities_from_metadata($options);
-			
-			elgg_set_ignore_access(false);
 			
 			if ($spam_login_filter_ip_list == 0) {
 				//Create the banned ip
 				$ip = new ElggObject();
 				$ip->subtype = 'spam_login_filter_ip';
-				$ip->access_id = ACCESS_PUBLIC;
+				$ip->access_id = ACCESS_PRIVATE;
 				$ip->ip_address = $ip_address;
+				$ip->owner_guid = $CONFIG->site_id;
 				$ip->save();
 			}
+			
+			elgg_set_ignore_access(false);
 		}
 	}
 	
-	if (empty($api_key)){
-		register_error(elgg_echo('spam_login_filter:empty_api_key_error'));
-		forward($forward);
-	}
 	
-	if (!empty($ip_address) && !empty($api_key)){
-		//Report the spammer
-		$url = 'http://www.stopforumspam.com/add.php?username='.$username.'&ip_addr='.$ip_address.'&email='.$email.'&api_key='.$api_key;
-		$return = file_get_conditional_contents($url);
-		
-		if ($return == false)
-		{
-			register_error(elgg_echo('spam_login_filter:unable_report'));
+	//Report to stopforumspam.com
+	if(elgg_get_plugin_setting("use_stopforumspam") == "yes"){
+		if (empty($api_key)){
+			register_error(elgg_echo('spam_login_filter:empty_api_key_error'));
 			forward($forward);
 		}
-	}
+
+		if (!empty($ip_address) && !empty($api_key)){
+			return;
+			//Report the spammer
+			$url = 'http://www.stopforumspam.com/add.php?username='.$username.'&ip_addr='.$ip_address.'&email='.$email.'&api_key='.$api_key;
+			$return = file_get_conditional_contents($url);
+			
+			if ($return == false)
+			{
+				register_error(elgg_echo('spam_login_filter:unable_report'));
+				forward($forward);
+			}
+		}
+	}	
 
 	if (($obj instanceof ElggUser) && ($obj->canEdit())) {
 		if ($obj->delete()) {
