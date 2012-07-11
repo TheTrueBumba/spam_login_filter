@@ -6,7 +6,7 @@
  ******************************************************************************/
 
 function spam_login_filter_init() {
-	global $CONFIG;
+
 	$action_path = elgg_get_plugins_path() . "spam_login_filter/actions/spam_login_filter";
 	
 	elgg_register_plugin_hook_handler("action", "register", "spam_login_filter_verify_action_hook", 999);
@@ -17,17 +17,16 @@ function spam_login_filter_init() {
 	
 	elgg_register_action('spam_login_filter/delete_ip', "$action_path/delete_ip.php", 'admin');
 	
-	register_elgg_event_handler('pagesetup', 'system', 'spam_login_filter_pagesetup');
+	elgg_register_event_handler('pagesetup', 'system', 'spam_login_filter_pagesetup');
 	
-	if(elgg_get_plugin_setting("use_ip_blacklist_cache") == "yes"){
+	if (elgg_get_plugin_setting("use_ip_blacklist_cache") == "yes") {
 		elgg_extend_view('forms/register', 'spam_login_filter/register', 100);
 	}
 	
 	// Extend context menu with admin links
-	if (isadminloggedin()){
-		if (elgg_is_active_plugin('tracker')){
+	if (elgg_is_admin_logged_in()) {
+		if (elgg_is_active_plugin('tracker')) {
 			elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'spam_login_filter_hover_menu', 1000);
-			//elgg_register_action("spam_login_filter/delete", false, "$action_path/delete.php", true);
 			elgg_register_action("spam_login_filter/delete", "$action_path/delete.php", "admin");
 		}
 	}
@@ -36,13 +35,10 @@ function spam_login_filter_init() {
 }
 
 function spam_login_filter_pagesetup() {
-	global $CONFIG;
-
 	elgg_register_admin_menu_item('administer', 'manageip', 'administer_utilities');
 }
 
 function spam_login_filter_page_handler($page) {
-	global $CONFIG;
 	
 	$page = (isset($page[0])) ? $page[0] : FALSE;
 
@@ -103,7 +99,7 @@ function spam_login_filter_verify_action_hook($hook, $entity_type, $returnvalue,
 }
 
 function spam_login_filter_notify_admin($blockedEmail, $blockedIp, $reason) {
-	if(elgg_get_plugin_setting("notify_by_mail") == "yes"){
+	if (elgg_get_plugin_setting("notify_by_mail") == "yes") {
 		//Notify spam tentative to administrator
 		global $CONFIG;
 		$site = get_entity($CONFIG->site_guid);
@@ -119,7 +115,7 @@ function spam_login_filter_notify_admin($blockedEmail, $blockedIp, $reason) {
 	}		
 }
 
-function validateUser($register_email,$register_ip){
+function validateUser($register_email, $register_ip) {
 	global $CONFIG;
 	$spammer = false;
 	
@@ -341,4 +337,4 @@ function customStripTags($content) {
 	return $content;
 }
 
-register_elgg_event_handler('init', 'system', 'spam_login_filter_init');
+elgg_register_event_handler('init', 'system', 'spam_login_filter_init');
