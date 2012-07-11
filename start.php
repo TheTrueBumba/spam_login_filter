@@ -311,19 +311,21 @@ function spam_login_filter_cron($hook, $entity_type, $returnvalue, $params){
 	elgg_set_ignore_access(false);
 }
 
-
+/**
+ * Add delete as spammer link to user hover menu
+ */
 function spam_login_filter_hover_menu($hook, $type, $return, $params) {
-	global $CONFIG;
 	$user = $params['entity'];
 	
-	if($user->guid != elgg_get_logged_in_user_guid()){
-		$ts = time();
-		$token = generate_action_token($ts);
-	
-		$url = $CONFIG->url . "action/spam_login_filter/delete?guid={$user->guid}&__elgg_token=$token&__elgg_ts=$ts";
-		$item = new ElggMenuItem("spam_login_filter_delete", elgg_echo("spam_login_filter:delete_and_report"), $url);
-		$item->setSection('admin');
-	
+	if ($user->guid != elgg_get_logged_in_user_guid()) {
+
+		$item = ElggMenuItem::factory(array(
+			'name' => "spam_login_filter_delete",
+			'href' => "action/spam_login_filter/delete?guid={$user->guid}",
+			'text' => elgg_echo("spam_login_filter:delete_and_report"),
+			'is_action' => true,
+			'section' => 'admin',
+		));	
 		$return[] = $item;
 	}
 	
