@@ -25,7 +25,7 @@
 		'spam_login_filter:admin:no_ips' => 'The IP list is empty.',
 
 		//Report to stopforumspam
-		'spam_login_filter:empty_ip_error' => "User´s IP address is empty.",
+		'spam_login_filter:empty_ip_error' => "User's IP address is empty.",
 		'spam_login_filter:empty_api_key_error' => "stopforumspam API key is empty.",
 		'spam_login_filter:unable_report' => "Unable to contact stopforumspam.com.",
 		'spam_login_filter:user_deleted' => "User deleted.",
