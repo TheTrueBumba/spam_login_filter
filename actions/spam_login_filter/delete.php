@@ -58,7 +58,6 @@
 		}
 
 		if (!empty($ip_address) && !empty($api_key)){
-			return;
 			//Report the spammer
 			$url = 'http://www.stopforumspam.com/add.php?username='.$username.'&ip_addr='.$ip_address.'&email='.$email.'&api_key='.$api_key;
 			$return = file_get_conditional_contents($url);
