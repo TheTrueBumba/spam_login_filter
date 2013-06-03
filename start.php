@@ -15,7 +15,7 @@ function spam_login_filter_init() {
 	
 	elgg_register_action('spam_login_filter/delete_ip', "$action_path/delete_ip.php", 'admin');
 	
-	elgg_register_event_handler('pagesetup', 'system', 'spam_login_filter_pagesetup');
+	elgg_register_admin_menu_item('administer', 'manageip', 'administer_utilities');
 	
 	if (elgg_get_plugin_setting("use_ip_blacklist_cache") == "yes") {
 		elgg_extend_view('forms/register', 'spam_login_filter/register', 100);
@@ -30,10 +30,6 @@ function spam_login_filter_init() {
 	}
 	
 	return true;
-}
-
-function spam_login_filter_pagesetup() {
-	elgg_register_admin_menu_item('administer', 'manageip', 'administer_utilities');
 }
 
 function spam_login_filter_verify_action_hook($hook, $entity_type, $returnvalue, $params) {
