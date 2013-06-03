@@ -24,7 +24,7 @@
 	
 	// setup pagination
 	$pagination = elgg_view('navigation/pagination',array(
-		'baseurl' => $vars['url'] . 'spam_login_filter/admin/',
+		'base_url' => $vars['url'] . 'spam_login_filter/admin/',
 		'offset' => $offset,
 		'count' => $count,
 		'limit' => $limit,
