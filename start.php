@@ -48,7 +48,10 @@ function spam_login_filter_page_handler($page) {
 		$content = elgg_view('spam_login_filter/manageip');
 		$title = elgg_echo('spam_login_filter:admin:manage_ips');
 
-		$body = elgg_view_layout('two_column_left_sidebar', '', elgg_view_title($title) . $content);
+		$body = elgg_view_layout('admin', array(
+			'title' => $title,
+			'content' => $content
+		));
 
 		echo elgg_view_page(elgg_echo('spam_login_filter:admin:manage_ips'), $title . $body);
 

@@ -24,7 +24,6 @@
 	
 	// setup pagination
 	$pagination = elgg_view('navigation/pagination',array(
-		'base_url' => $vars['url'] . 'spam_login_filter/admin/',
 		'offset' => $offset,
 		'count' => $count,
 		'limit' => $limit,
@@ -40,12 +39,9 @@
 	
 	$form_body .= "</table>";
 
-	//$form_body = elgg_view("page/elements/wrapper", array('body' => $form_body));
-
 	echo elgg_view('input/form', array(
 		'body' => $form_body,
 		'name' => 'spam_login_filter_delete_ip',
 	));
 	
 	echo $pagination;
-?>
