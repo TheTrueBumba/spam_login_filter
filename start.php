@@ -426,8 +426,18 @@ function spam_login_filter_is_ip_whitelisted($ip = false) {
 
 
 function spam_login_filter_is_email_whitelisted($email) {
+    // check for domain whitelist first
+    $whitelist = elgg_get_plugin_setting('whitelist_email_domain', 'spam_login_filter');
+    $whitelist = explode("\n", $whitelist);
+    $whitelist = array_map('trim', $whitelist);
     
-    // check for whitelist first
+    $parts = explode('@', $email);
+    
+    if (in_array($parts[1], $whitelist)) {
+        return true; // we're whitelisted!
+    }
+    
+    // check for specific email whitelist
     $whitelist = elgg_get_plugin_setting('whitelist_email', 'spam_login_filter');
     $whitelist = explode("\n", $whitelist);
     $whitelist = array_map('trim', $whitelist);

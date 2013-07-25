@@ -172,6 +172,20 @@
     echo '<br><br>';
     
     
+    echo elgg_echo('spam_login_filter:whitelist:email:domain');
+    echo elgg_view('input/plaintext', array(
+        'name' => 'params[whitelist_email_domain]',
+        'value' => $vars['entity']->whitelist_email_domain
+    ));
+    echo elgg_view('output/longtext', array(
+        'value' => elgg_echo('spam_login_filter:whitelist:email:domain:help'),
+        'class' => 'elgg-subtext'
+    ));
+    
+    
+    echo '<br><br>';
+    
+    
     echo elgg_echo('spam_login_filter:whitelist:email');
     echo elgg_view('input/plaintext', array(
         'name' => 'params[whitelist_email]',
