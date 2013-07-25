@@ -87,7 +87,7 @@ Reason: %s.",
         'spam_login_filter:whitelist:email' => "Whitelist email addresses",
         'spam_login_filter:whitelist:email:help' => "Enter one email per line.  Email addresses listed here will not be denied at registration/login.",
         'spam_login_filter:whitelist:email:domain' => "Whitelist email domains",
-        'spam_login_filter:whitelist:email:help:domain' => "Enter one domain per line.  Email addresses with domains listed here will not be denied at registration/login.",
+        'spam_login_filter:whitelist:email:domain:help' => "Enter one domain per line.  Email addresses with domains listed here will not be denied at registration/login.",
         
         //Events
         'spam_login_filter:check_login' => "Check for spammers on login?",
