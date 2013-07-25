@@ -97,9 +97,15 @@ function spam_login_filter_notify_admin($blockedEmail, $blockedIp, $reason) {
 	}		
 }
 
-function validateUser($register_email, $register_ip) {
+function validateUser($register_email, $register_ip, $checkemail = true) {
 	$spammer = false;
-    $email_whitelisted = spam_login_filter_is_email_whitelisted($register_email);
+	
+	if ($checkemail) {
+		$email_whitelisted = spam_login_filter_is_email_whitelisted($register_email);
+	}
+	else {
+		$email_whitelisted = true;
+	}
     $ip_whitelisted = spam_login_filter_is_ip_whitelisted($register_ip);
     
     if ($email_whitelisted && $ip_whitelisted) {
@@ -364,7 +370,16 @@ function spam_login_filter_router($hook, $type, $return, $params) {
 	
 	elgg_set_ignore_access(false);
 
+	$deny = false;
 	if ($spam_login_filter_ip_list > 0) {
+		$deny = true;
+    }
+	
+	if (!verifyUser('', $ip, false)) {
+		$deny = true;
+	}
+	
+	if ($deny) {
 		ob_end_clean();
 		header($_SERVER['SERVER_PROTOCOL'] . ' 403 Forbidden');
 		echo "403 Forbidden";
