@@ -64,9 +64,11 @@ Reason: %s.",
 		'spam_login_filter:use_mail_blacklist' => "Use especific mail blacklist",
 		'spam_login_filter:blacklisted_mails' => "Blacklisted mails - One per line",
 		
-		'spam_login_filter:use_ip_blacklist_cache' => "Use IP blacklist cache",
+		'spam_login_filter:protected_pages' => "Use IP blacklist cache to protect specific pages",
 		
-		'spam_login_filter:use_ip_blacklist_cache_description' => "Blacklisted IPs can navigate into site, but will see the error '403 error - Access denied' in registration page.",
+		'spam_login_filter:protected_pages:help' => "Enter one path per line.
+            eg. To protect the registration page enter 'register' on a line
+            Blacklisted IPs can navigate to the site, but will see the error '403 error - Access denied' in protected pages.",
 		
 		//Configuration form - Titles
 		'spam_login_filter:title_stopforumspam' => "Stopforumspam",
@@ -74,7 +76,20 @@ Reason: %s.",
 		'spam_login_filter:title_domain_blacklist' => "Domain Blacklist",
 		'spam_login_filter:title_email_blacklist' => "Email Blacklist",
 		'spam_login_filter:title_plugin_notifications' => "Plugin Notifications",
-		'spam_login_filter:title_ip_blacklist' => "IP Blacklist"
+		'spam_login_filter:title_ip_blacklist' => "IP Blacklist",
+        'spam_login_filter:whitelist' => "Whitelists",
+        'spam_login_filter:events' => "Events",
+        
+        
+        // Whitelist
+        'spam_login_filter:whitelist:ip' => "Whitelist IP addresses",
+        'spam_login_filter:whitelist:ip:help' => "Enter one IP per line.  IP addresses listed here will not be denied access.",
+        'spam_login_filter:whitelist:email' => "Whitelist email addresses",
+        'spam_login_filter:whitelist:email:help' => "Enter one email per line.  Email addresses listed here will not be denied at registration/login.",
+        
+        //Events
+        'spam_login_filter:check_login' => "Check for spammers on login?",
+        'spam_login_filter:check_login:help' => "This can help catch spammers who weren't in the database at the time of registration, but come back to do their dirty work",
 			
 	);
 	add_translation("en",$english);

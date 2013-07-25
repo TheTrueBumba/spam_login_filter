@@ -20,7 +20,7 @@
 		forward($forward);
 	}
 	else {
-		if(elgg_get_plugin_setting('use_ip_blacklist_cache', 'spam_login_filter') == "yes"){
+		if(elgg_get_plugin_setting("use_ip_blacklist_cache") == "yes"){
 			// Blacklist the IP
 			//Check if the ip exists			
 			$options = array(
@@ -51,7 +51,7 @@
 	
 	
 	//Report to stopforumspam.com
-	if(elgg_get_plugin_setting('use_stopforumspam', 'spam_login_filter') == "yes"){
+	if(elgg_get_plugin_setting("use_stopforumspam") == "yes"){
 		if (empty($api_key)){
 			register_error(elgg_echo('spam_login_filter:empty_api_key_error'));
 			forward($forward);
