@@ -341,6 +341,9 @@ function spam_login_filter_router($hook, $type, $return, $params) {
     $protect_uris = array_map('trim', $protect);
     
     // reconstruct URI
+	if (!is_array($return['segments'])) {
+		$return['segments'] = array();
+	}
     $parts = array_merge(array($return['handler']), $return['segments']);
     $uri = implode('/', $parts);
     
