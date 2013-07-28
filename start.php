@@ -379,7 +379,7 @@ function spam_login_filter_router($hook, $type, $return, $params) {
 		$deny = true;
     }
 	
-	if (!verifyUser('', $ip, false)) {
+	if (!validateUser('', $ip, false)) {
 		$deny = true;
 	}
 	
