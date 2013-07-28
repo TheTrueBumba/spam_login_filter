@@ -103,7 +103,7 @@
     </select><br>
 <?php
 	echo elgg_echo('spam_login_filter:blacklisted_mail_domains');
-	echo elgg_view('input/plaintext', array('name' => "params[blacklisted_mail_domains]", 'value' => $vars['entity']->blacklisted_mail_domains));
+	echo elgg_view('input/longtext', array('name' => "params[blacklisted_mail_domains]", 'value' => $vars['entity']->blacklisted_mail_domains));
 
 	echo "<br><br>";
 ?>
@@ -119,7 +119,7 @@
     </select><br>
 <?php
 	echo elgg_echo('spam_login_filter:blacklisted_mails');
-	echo elgg_view('input/plaintext', array('name' => "params[blacklisted_mails]", 'value' => $vars['entity']->blacklisted_mails));
+	echo elgg_view('input/longtext', array('name' => "params[blacklisted_mails]", 'value' => $vars['entity']->blacklisted_mails));
 
 	echo "<br><br>";
 ?>
@@ -141,13 +141,75 @@
 	echo "<br><br>";
 ?>
 <hr>
-<h3><?php echo elgg_echo('spam_login_filter:title_ip_blacklist');?></h3>
+<h3><?php echo elgg_echo('spam_login_filter:title_ip_blacklist');?></h3><br> 
 <?php
-	echo elgg_echo('spam_login_filter:use_ip_blacklist_cache_description');
-	echo ('<br>');
-	echo elgg_echo('spam_login_filter:use_ip_blacklist_cache');
-?>
-	<select name="params[use_ip_blacklist_cache]">
-		<option value="yes" <?php if ($vars['entity']->use_ip_blacklist_cache == "yes") echo " selected=\"yes\" "; ?>>Yes</option>
-		<option value="no" <?php if ($vars['entity']->use_ip_blacklist_cache == "no") echo " selected=\"yes\" "; ?>>No</option>
-    </select><br>
+
+    echo elgg_echo('spam_login_filter:protected_pages');
+
+    echo elgg_view('input/plaintext', array(
+        'name' => 'params[protected_pages]',
+        'value' => $vars['entity']->protected_pages
+    ));
+    echo elgg_view('output/longtext', array(
+        'value' => elgg_echo('spam_login_filter:protected_pages:help'),
+        'class' => 'elgg-subtext'
+    ));
+    
+    
+    echo '<br><br><hr>';
+    echo '<h3>' . elgg_echo('spam_login_filter:whitelist') . '</h3><br>';
+    
+    echo elgg_echo('spam_login_filter:whitelist:ip');
+    echo elgg_view('input/plaintext', array(
+        'name' => 'params[whitelist_ip]',
+        'value' => $vars['entity']->whitelist_ip
+    ));
+    echo elgg_view('output/longtext', array(
+        'value' => elgg_echo('spam_login_filter:whitelist:ip:help'),
+        'class' => 'elgg-subtext'
+    ));
+    
+    echo '<br><br>';
+    
+    
+    echo elgg_echo('spam_login_filter:whitelist:email:domain');
+    echo elgg_view('input/plaintext', array(
+        'name' => 'params[whitelist_email_domain]',
+        'value' => $vars['entity']->whitelist_email_domain
+    ));
+    echo elgg_view('output/longtext', array(
+        'value' => elgg_echo('spam_login_filter:whitelist:email:domain:help'),
+        'class' => 'elgg-subtext'
+    ));
+    
+    
+    echo '<br><br>';
+    
+    
+    echo elgg_echo('spam_login_filter:whitelist:email');
+    echo elgg_view('input/plaintext', array(
+        'name' => 'params[whitelist_email]',
+        'value' => $vars['entity']->whitelist_email
+    ));
+    echo elgg_view('output/longtext', array(
+        'value' => elgg_echo('spam_login_filter:whitelist:email:help'),
+        'class' => 'elgg-subtext'
+    ));
+    
+    echo '<br><br><hr>';
+    
+    echo '<h3>' . elgg_echo('spam_login_filter:events') . '</h3><br>';
+    
+    echo elgg_view('input/dropdown', array(
+        'name' => 'params[event_login]',
+        'value' => $vars['entity']->event_login ? $vars['entity']->event_login : 'yes',
+        'options_values' => array(
+            'yes' => elgg_echo('option:yes'),
+            'no' => elgg_echo('option:no')
+        )
+    ));
+    echo '&nbsp;' . elgg_echo('spam_login_filter:check_login');
+    echo elgg_view('output/longtext', array(
+        'value' => elgg_echo('spam_login_filter:check_login:help'),
+        'class' => 'elgg-subtext'
+    ));
