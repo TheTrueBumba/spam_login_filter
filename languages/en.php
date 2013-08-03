@@ -92,6 +92,10 @@ Reason: %s.",
         //Events
         'spam_login_filter:check_login' => "Check for spammers on login?",
         'spam_login_filter:check_login:help' => "This can help catch spammers who weren't in the database at the time of registration, but come back to do their dirty work",
+		'spam_login_filter:label:user_metadata' => "User Metadata",
+		'spam_login_filter:user_metadata:help' => "Check metadata for banned values - enter one metadata name per line",
+		'spam_login_filter:label:banned_metadata' => "Block login if metadata contains:",
+		'spam_login_filter:banned_metadata:help' => "This uses a 'contains' check, so be specific.  eg. if you list 'company' as a checked metadata above, and list 'inter' here, it will block anybody who has 'arck interactive' listed as a value for company",
 			
 	);
 	add_translation("en",$english);

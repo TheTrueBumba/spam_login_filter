@@ -213,3 +213,28 @@
         'value' => elgg_echo('spam_login_filter:check_login:help'),
         'class' => 'elgg-subtext'
     ));
+	
+	echo '<br><br>';
+	
+	echo elgg_echo('spam_login_filter:label:user_metadata');
+	echo elgg_view('input/plaintext', array(
+		'name' => 'params[user_metadata]',
+		'value' => $vars['entity']->user_metadata
+	));
+	echo elgg_view('output/longtext', array(
+        'value' => elgg_echo('spam_login_filter:user_metadata:help'),
+        'class' => 'elgg-subtext'
+    ));
+	
+	
+	echo '<br><br>';
+	
+	echo elgg_echo('spam_login_filter:label:banned_metadata');
+	echo elgg_view('input/plaintext', array(
+		'name' => 'params[banned_metadata]',
+		'value' => $vars['entity']->banned_metadata
+	));
+	echo elgg_view('output/longtext', array(
+        'value' => elgg_echo('spam_login_filter:banned_metadata:help'),
+        'class' => 'elgg-subtext'
+    ));

@@ -1,6 +1,4 @@
 <?php
-	// block non-admin users - require since this action is not registered
-	admin_gatekeeper();
 	
 	$forward = REFERER;
 	$deleted = false;
@@ -35,13 +33,13 @@
 			
 			$spam_login_filter_ip_list = elgg_get_entities_from_metadata($options);
 			
-			if ($spam_login_filter_ip_list == 0) {
+			if (!$spam_login_filter_ip_list) {
 				//Create the banned ip
 				$ip = new ElggObject();
 				$ip->subtype = 'spam_login_filter_ip';
 				$ip->access_id = ACCESS_PRIVATE;
 				$ip->ip_address = $ip_address;
-				$ip->owner_guid = $CONFIG->site_id;
+				$ip->owner_guid = elgg_get_site_entity()->guid;
 				$ip->save();
 			}
 			
