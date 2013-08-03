@@ -340,6 +340,7 @@ function spam_login_filter_router($hook, $type, $return, $params) {
     $protect = explode("\n", $protect_setting);
     $protect_uris = array_map('trim', $protect);
     
+    // reconstruct URI
     if (is_array($return['segments'])) {
         $parts = array_merge(array($return['handler']), $return['segments']);
         $uri = implode('/', $parts);
@@ -462,9 +463,46 @@ function spam_login_filter_login_event($event, $type, $user) {
             return false;
         }
     }
+	
+	// check user metadata for banned words/phrases
+	$banned = spam_login_filter_get_banned_strings();
+	$metadata = spam_login_filter_get_user_metadata();
+
+	if ($banned && $metadata) {
+		foreach ($metadata as $m) {
+			foreach ($banned as $str) {
+				if (strpos($user->$m, $str) !== false) {
+					return false;
+				}
+			}
+		}
+	}
 }
 
 
+function spam_login_filter_get_banned_strings() {
+	$string = elgg_get_plugin_setting('banned_metadata', 'spam_login_filter');
+	if (!$string) {
+		return array();
+	}
+	
+    $array = explode("\n", $string);
+    $array = array_map('trim', $array);
+	
+	return $array;
+}
+
+function spam_login_filter_get_user_metadata() {
+	$string = elgg_get_plugin_setting('user_metadata', 'spam_login_filter');
+	if (!$string) {
+		return array();
+	}
+	
+    $array = explode("\n", $string);
+    $array = array_map('trim', $array);
+	
+	return $array;
+}
 
 function spam_login_filter_upgrade_1() {
     if (elgg_get_plugin_setting('use_ip_blacklist_cache', 'spam_login_filter') == 'yes') {
