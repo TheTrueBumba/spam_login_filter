@@ -60,12 +60,12 @@ function spam_login_filter_verify_action_hook($hook, $entity_type, $returnvalue,
 				
 		if ($spam_login_filter_ip_list == 0) {
 			//Create the banned ip
-			$ip = new ElggObject();
-			$ip->subtype = 'spam_login_filter_ip';
-			$ip->access_id = ACCESS_PRIVATE;
-			$ip->ip_address = $ip;
-			$ip->owner_guid = elgg_get_site_entity()->guid;
-			$ip->save();
+			$ip_obj = new ElggObject();
+			$ip_obj->subtype = 'spam_login_filter_ip';
+			$ip_obj->access_id = ACCESS_PRIVATE;
+			$ip_obj->ip_address = $ip;
+			$ip_obj->owner_guid = elgg_get_site_entity()->guid;
+			$ip_obj->save();
 		}
 		
 		elgg_set_ignore_access(false);
