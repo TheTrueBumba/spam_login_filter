@@ -76,7 +76,7 @@ Motivo: %s.",
 		'spam_login_filter:title_domain_blacklist' => "Lista negra de domínios",
 		'spam_login_filter:title_email_blacklist' => "Lista negra de e-mails",
 		'spam_login_filter:title_plugin_notifications' => "Notificações do plugin",
-		'spam_login_filter:title_ip_blacklist' => "Lista negra de ips"
+		'spam_login_filter:title_ip_blacklist' => "Lista negra de ips",
 		'spam_login_filter:whitelist' => "Lista branca",
         'spam_login_filter:events' => "Eventos",
 		

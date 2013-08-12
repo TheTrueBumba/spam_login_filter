@@ -103,8 +103,8 @@
     </select><br>
 <?php
 	echo elgg_echo('spam_login_filter:blacklisted_mail_domains');
-	echo elgg_view('input/longtext', array('name' => "params[blacklisted_mail_domains]", 'value' => $vars['entity']->blacklisted_mail_domains));
-
+	echo elgg_view('input/plaintext', array('name' => "params[blacklisted_mail_domains]", 'value' => $vars['entity']->blacklisted_mail_domains));
+	
 	echo "<br><br>";
 ?>
 <hr>
@@ -119,7 +119,7 @@
     </select><br>
 <?php
 	echo elgg_echo('spam_login_filter:blacklisted_mails');
-	echo elgg_view('input/longtext', array('name' => "params[blacklisted_mails]", 'value' => $vars['entity']->blacklisted_mails));
+	echo elgg_view('input/plaintext', array('name' => "params[blacklisted_mails]", 'value' => $vars['entity']->blacklisted_mails));
 
 	echo "<br><br>";
 ?>
