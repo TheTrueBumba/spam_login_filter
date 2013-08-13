@@ -115,7 +115,7 @@ function spam_login_filter_check_spammer($register_email, $register_ip, $checkem
 	
 	//Mail domain blacklist
 	if (elgg_get_plugin_setting('use_mail_domain_blacklist', 'spam_login_filter') == "yes" && !$email_whitelisted) {
-		$blacklistedMailDomains = preg_split('/\\s+/', customStripTags(elgg_get_plugin_setting('blacklisted_mail_domains', 'spam_login_filter')), -1, PREG_SPLIT_NO_EMPTY);
+		$blacklistedMailDomains = preg_split('/\\s+/', spam_login_filter_custom_strip_tags(elgg_get_plugin_setting('blacklisted_mail_domains', 'spam_login_filter')), -1, PREG_SPLIT_NO_EMPTY);
 		$mailDomain = explode("@", $register_email);
 		
 		foreach ($blacklistedMailDomains as $domain) {
@@ -131,7 +131,7 @@ function spam_login_filter_check_spammer($register_email, $register_ip, $checkem
 	if (!$spammer) {
 		//Mail blacklist
 		if (elgg_get_plugin_setting('use_mail_blacklist', 'spam_login_filter') == "yes" && !$email_whitelisted) {
-			$blacklistedMails = preg_split('/\\s+/', customStripTags(elgg_get_plugin_setting('blacklisted_mails', 'spam_login_filter')), -1, PREG_SPLIT_NO_EMPTY);
+			$blacklistedMails = preg_split('/\\s+/', spam_login_filter_custom_strip_tags(elgg_get_plugin_setting('blacklisted_mails', 'spam_login_filter')), -1, PREG_SPLIT_NO_EMPTY);
 			
 			foreach ($blacklistedMails as $blacklistedMail) {
 				if ($blacklistedMail == $register_email) {
@@ -321,7 +321,7 @@ function spam_login_filter_hover_menu($hook, $type, $return, $params) {
 	return $return;
 }
 
-function customStripTags($content) {
+function spam_login_filter_custom_strip_tags($content) {
 	$searchSpaces = array(' ', '&nbsp;');
 	$content = str_replace($searchSpaces, '', $content);
 	$content = strip_tags($content);
