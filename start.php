@@ -67,6 +67,7 @@ function spam_login_filter_verify_action_hook($hook, $entity_type, $returnvalue,
 			$ip_obj->access_id = ACCESS_PRIVATE;
 			$ip_obj->ip_address = $ip;
 			$ip_obj->owner_guid = elgg_get_site_entity()->guid;
+			$ip_obj->container_guid = elgg_get_site_entity()->guid;
 			$ip_obj->save();
 		}
 		

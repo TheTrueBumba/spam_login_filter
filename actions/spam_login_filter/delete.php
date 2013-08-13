@@ -42,6 +42,7 @@
 				$ip->access_id = ACCESS_PRIVATE;
 				$ip->ip_address = $ip_address;
 				$ip->owner_guid = elgg_get_site_entity()->guid;
+				$ip->container_guid = elgg_get_site_entity()->guid;
 				$ip->save();
 			}
 			
