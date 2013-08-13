@@ -41,11 +41,11 @@ function spam_login_filter_verify_action_hook($hook, $entity_type, $returnvalue,
 	$email = get_input('email');
     $ip = spam_login_filter_get_ip();
 	
-	if (validateUser($email, $ip)) {		
+	if (spam_login_filter_check_spammer($email, $ip)) {
 		return true;
 	}
 	else {
-		//Check if the ip exists			
+		//Check if the ip exists
 		$options = array(
 			"type" => "object",
 			"subtype" => "spam_login_filter_ip",
@@ -94,10 +94,10 @@ function spam_login_filter_notify_admin($blockedEmail, $blockedIp, $reason) {
         }
 
 		elgg_send_email($from, $to, elgg_echo('spam_login_filter:notify_subject'), $message);
-	}		
+	}
 }
 
-function validateUser($register_email, $register_ip, $checkemail = true) {
+function spam_login_filter_check_spammer($register_email, $register_ip, $checkemail = true) {
 	$spammer = false;
 	
 	if ($checkemail) {
@@ -189,9 +189,9 @@ function validateUser($register_email, $register_ip, $checkemail = true) {
 			$fassim_api_key = elgg_get_plugin_setting('fassim_api_key', 'spam_login_filter');
 			$fassim_check_email = elgg_get_plugin_setting('fassim_check_email', 'spam_login_filter');
 			$fassim_check_ip = elgg_get_plugin_setting('fassim_check_ip', 'spam_login_filter');
-			$fassim_block_proxies = elgg_get_plugin_setting('fassim_block_proxies', 'spam_login_filter');			
+			$fassim_block_proxies = elgg_get_plugin_setting('fassim_block_proxies', 'spam_login_filter');
 			$fassim_block_top_spamming_isps = elgg_get_plugin_setting('fassim_block_top_spamming_isps', 'spam_login_filter');
-			$fassim_block_top_spamming_domains = elgg_get_plugin_setting('fassim_block_top_spamming_domains', 'spam_login_filter');			
+			$fassim_block_top_spamming_domains = elgg_get_plugin_setting('fassim_block_top_spamming_domains', 'spam_login_filter');
 			$fassim_blocked_country_list = elgg_get_plugin_setting('fassim_blocked_country_list', 'spam_login_filter');
 			$fassim_blocked_region_list = elgg_get_plugin_setting('fassim_blocked_region_list', 'spam_login_filter');
 			
@@ -314,7 +314,7 @@ function spam_login_filter_hover_menu($hook, $type, $return, $params) {
 			'text' => elgg_echo("spam_login_filter:delete_and_report"),
 			'is_action' => true,
 			'section' => 'admin',
-		));	
+		));
 		$return[] = $item;
 	}
 	
@@ -360,7 +360,7 @@ function spam_login_filter_router($hook, $type, $return, $params) {
     $ip = spam_login_filter_get_ip();
     
     // we need to protect this page
-    //Check if the ip exists			
+    //Check if the ip exists
 	$options = array(
 		"type" => "object",
 		"subtype" => "spam_login_filter_ip",
@@ -380,7 +380,7 @@ function spam_login_filter_router($hook, $type, $return, $params) {
 		$deny = true;
     }
 	
-	if (!validateUser('', $ip, false)) {
+	if (!spam_login_filter_check_spammer('', $ip, false)) {
 		$deny = true;
 	}
 	
@@ -459,7 +459,7 @@ function spam_login_filter_login_event($event, $type, $user) {
     $check_login = elgg_get_plugin_setting('event_login', 'spam_login_filter');
     
     if ($check_login != 'no') { // do it by default
-        if (!validateUser($user->email, spam_login_filter_get_ip())) {
+        if (!spam_login_filter_check_spammer($user->email, spam_login_filter_get_ip())) {
             return false;
         }
     }
