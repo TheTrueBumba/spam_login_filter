@@ -24,8 +24,10 @@
 			$options = array(
 				"type" => "object",
 				"subtype" => "spam_login_filter_ip",
-				"metadata_names" => "ip_address",
-				"metadata_values" => $ip_address,
+				"metadata_name_value_pairs" => array(
+					"name" => "ip_address",
+					"value" => $ip_address,
+				),
 				"count" => TRUE
 			);
 

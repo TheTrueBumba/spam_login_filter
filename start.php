@@ -49,8 +49,10 @@ function spam_login_filter_verify_action_hook($hook, $entity_type, $returnvalue,
 		$options = array(
 			"type" => "object",
 			"subtype" => "spam_login_filter_ip",
-			"metadata_names" => "ip_address",
-			"metadata_values" => $ip,
+			"metadata_name_value_pairs" => array(
+				"name" => "ip_address",
+				"value" => $ip,
+			),
 			"count" => TRUE
 		);
 		
@@ -364,8 +366,10 @@ function spam_login_filter_router($hook, $type, $return, $params) {
 	$options = array(
 		"type" => "object",
 		"subtype" => "spam_login_filter_ip",
-		"metadata_names" => "ip_address",
-        "metadata_values" => $ip,
+		"metadata_name_value_pairs" => array(
+			"name" => "ip_address",
+        	"value" => $ip,
+		),
 		"count" => TRUE
 	);
 	
