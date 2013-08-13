@@ -41,7 +41,7 @@
 	if (elgg_is_active_plugin("tracker")) {
 		$form_body .= "<th>" . elgg_echo("tracker:moreinfo") . "</th>";
 	}
-	$form_body .= "<th>" . elgg_echo("delete") . "</th>";
+	$form_body .= "<th class='center'>" . elgg_echo("delete") . "</th>";
 	$form_body .= "</tr>";
 	
 	foreach ($spam_login_filter_ip_list as $spam_login_filter_ip) {

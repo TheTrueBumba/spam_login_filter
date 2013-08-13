@@ -38,5 +38,5 @@ echo "<td>" . $created_date . "</td>";
 if ($tracker_link) {
 	echo "<td>" . $tracker_link . "</td>";
 }
-echo "<td>" . $delete . "</td>";
+echo "<td class='center'>" . $delete . "</td>";
 echo "</tr>";
