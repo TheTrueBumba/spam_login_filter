@@ -29,7 +29,7 @@
 				"count" => TRUE
 			);
 
-			elgg_set_ignore_access(true);
+			$ia = elgg_set_ignore_access(true);
 			
 			$spam_login_filter_ip_list = elgg_get_entities_from_metadata($options);
 			
@@ -43,7 +43,7 @@
 				$ip->save();
 			}
 			
-			elgg_set_ignore_access(false);
+			elgg_set_ignore_access($ia);
 		}
 	}
 	

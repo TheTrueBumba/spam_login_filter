@@ -54,7 +54,7 @@ function spam_login_filter_verify_action_hook($hook, $entity_type, $returnvalue,
 			"count" => TRUE
 		);
 		
-		elgg_set_ignore_access(true);
+		$ia = elgg_set_ignore_access(true);
 		
 		$spam_login_filter_ip_list = elgg_get_entities_from_metadata($options);
 				
@@ -68,7 +68,7 @@ function spam_login_filter_verify_action_hook($hook, $entity_type, $returnvalue,
 			$ip_obj->save();
 		}
 		
-		elgg_set_ignore_access(false);
+		elgg_set_ignore_access($ia);
 
 		//return false;
 		forward();
@@ -288,7 +288,7 @@ function spam_login_filter_cron($hook, $entity_type, $returnvalue, $params){
 		"created_time_upper" => $time_to_seek
 	);
 	
-	elgg_set_ignore_access(true);
+	$ia = elgg_set_ignore_access(true);
 	
 	$spam_login_filter_ip_list = elgg_get_entities($options);
 
@@ -297,7 +297,7 @@ function spam_login_filter_cron($hook, $entity_type, $returnvalue, $params){
 			$ip_to_exclude->delete();
 		}
 	}
-	elgg_set_ignore_access(false);
+	elgg_set_ignore_access($ia);
 }
 
 /**
@@ -369,11 +369,11 @@ function spam_login_filter_router($hook, $type, $return, $params) {
 		"count" => TRUE
 	);
 	
-	elgg_set_ignore_access(true);
+	$ia = elgg_set_ignore_access(true);
 	
 	$spam_login_filter_ip_list = elgg_get_entities_from_metadata($options);
 	
-	elgg_set_ignore_access(false);
+	elgg_set_ignore_access($ia);
 
 	$deny = false;
 	if ($spam_login_filter_ip_list > 0) {
