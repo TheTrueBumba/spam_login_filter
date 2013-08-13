@@ -151,7 +151,7 @@ function spam_login_filter_check_spammer($register_email, $register_ip, $checkem
 			//check the e-mail adress
 			$url = "http://www.stopforumspam.com/api?email=".$register_email."&f=serial";
 			
-			$return = file_get_conditional_contents($url);
+			$return = spam_login_filter_file_get_conditional_contents($url);
 			
 			if ($return != false) {
 				$data = unserialize($return);
@@ -167,7 +167,7 @@ function spam_login_filter_check_spammer($register_email, $register_ip, $checkem
 			//e-mail not found in the database, now check the ip
 				$url = "http://www.stopforumspam.com/api?ip=".$register_ip."&f=serial";
 				
-				$return = file_get_conditional_contents($url);
+				$return = spam_login_filter_file_get_conditional_contents($url);
 				
 				if ($return != false) {
 					$data = unserialize($return);
@@ -199,7 +199,7 @@ function spam_login_filter_check_spammer($register_email, $register_ip, $checkem
 
 				$url = 'http://api.fassim.com/regcheck.php?apikey='.$fassim_api_key.'&email='.$register_email."&ip=".$register_ip.'&proxy='.$fassim_block_proxies.'&topisp='.$fassim_block_top_spamming_isps.'&topdm='.$fassim_block_top_spamming_domains.'&cc='.$fassim_blocked_country_list.'&region='.$fassim_blocked_region_list.'&hostForumVersion=ELGG';
 			
-				$return = file_get_conditional_contents($url);
+				$return = spam_login_filter_file_get_conditional_contents($url);
 				
 				if ($return != false) {
 					$results = json_decode($return);
@@ -259,7 +259,7 @@ function spam_login_filter_check_spammer($register_email, $register_ip, $checkem
 	return !$spammer;
 }
 
-function file_get_conditional_contents($szURL)
+function spam_login_filter_file_get_conditional_contents($szURL)
 {
 	$pCurl = curl_init($szURL);
 	
