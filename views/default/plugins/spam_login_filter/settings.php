@@ -117,7 +117,7 @@
 	
 	$content .= "<div>";
 	$content .= elgg_echo("spam_login_filter:notify_mail_address");
-	$content .= elgg_view("input/plaintext", array("name" => "params[notify_mail_address]", "value" => $plugin->notify_mail_address));
+	$content .= elgg_view("input/text", array("name" => "params[notify_mail_address]", "value" => $plugin->notify_mail_address));
 	$content .= "</div>";
 	
 	echo elgg_view_module("inline", $title, $content);
