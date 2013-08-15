@@ -13,8 +13,8 @@
 		
 		//Admin menu
 		'admin:administer_utilities:manageip' => "Manage blocked IPs",
-		'spam_login_filter:admin:ip_date_created' => 'Created %s',
-		'spam_login_filter:admin:delete_ip' => 'Delete',
+		'spam_login_filter:admin:ip_address' => 'IP Address',
+		'spam_login_filter:admin:ip_date_created' => 'Created',
 		'spam_login_filter:admin:confirm_delete_ip' => 'Delete %s?',
 		
 		'spam_login_filter:messages:deleted_ip' => 'IP Deleted.',
@@ -33,7 +33,7 @@
 		
 		//Configuration form - Fassim settings
 		'spam_login_filter:use_fassim' => "Use fassim.com",
-		'spam_login_filter:fassim_api_key' => "Fassim API Key",		
+		'spam_login_filter:fassim_api_key' => "Fassim API Key",
 		'spam_login_filter:fassim_check_email' => "Check email?",
 		'spam_login_filter:fassim_check_ip' => "Check IP?",
 		'spam_login_filter:fassim_block_proxies' => "Block anonymous proxies?",
@@ -99,5 +99,3 @@ Reason: %s.",
 			
 	);
 	add_translation("en",$english);
-
-?>

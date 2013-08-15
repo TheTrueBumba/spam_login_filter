@@ -41,20 +41,22 @@ function spam_login_filter_verify_action_hook($hook, $entity_type, $returnvalue,
 	$email = get_input('email');
     $ip = spam_login_filter_get_ip();
 	
-	if (validateUser($email, $ip)) {		
+	if (spam_login_filter_check_spammer($email, $ip)) {
 		return true;
 	}
 	else {
-		//Check if the ip exists			
+		//Check if the ip exists
 		$options = array(
 			"type" => "object",
 			"subtype" => "spam_login_filter_ip",
-			"metadata_names" => "ip_address",
-			"metadata_values" => $ip,
+			"metadata_name_value_pairs" => array(
+				"name" => "ip_address",
+				"value" => $ip,
+			),
 			"count" => TRUE
 		);
 		
-		elgg_set_ignore_access(true);
+		$ia = elgg_set_ignore_access(true);
 		
 		$spam_login_filter_ip_list = elgg_get_entities_from_metadata($options);
 				
@@ -65,10 +67,11 @@ function spam_login_filter_verify_action_hook($hook, $entity_type, $returnvalue,
 			$ip_obj->access_id = ACCESS_PRIVATE;
 			$ip_obj->ip_address = $ip;
 			$ip_obj->owner_guid = elgg_get_site_entity()->guid;
+			$ip_obj->container_guid = elgg_get_site_entity()->guid;
 			$ip_obj->save();
 		}
 		
-		elgg_set_ignore_access(false);
+		elgg_set_ignore_access($ia);
 
 		//return false;
 		forward();
@@ -94,10 +97,10 @@ function spam_login_filter_notify_admin($blockedEmail, $blockedIp, $reason) {
         }
 
 		elgg_send_email($from, $to, elgg_echo('spam_login_filter:notify_subject'), $message);
-	}		
+	}
 }
 
-function validateUser($register_email, $register_ip, $checkemail = true) {
+function spam_login_filter_check_spammer($register_email, $register_ip, $checkemail = true) {
 	$spammer = false;
 	
 	if ($checkemail) {
@@ -115,7 +118,7 @@ function validateUser($register_email, $register_ip, $checkemail = true) {
 	
 	//Mail domain blacklist
 	if (elgg_get_plugin_setting('use_mail_domain_blacklist', 'spam_login_filter') == "yes" && !$email_whitelisted) {
-		$blacklistedMailDomains = preg_split('/\\s+/', customStripTags(elgg_get_plugin_setting('blacklisted_mail_domains', 'spam_login_filter')), -1, PREG_SPLIT_NO_EMPTY);
+		$blacklistedMailDomains = preg_split('/\\s+/', spam_login_filter_custom_strip_tags(elgg_get_plugin_setting('blacklisted_mail_domains', 'spam_login_filter')), -1, PREG_SPLIT_NO_EMPTY);
 		$mailDomain = explode("@", $register_email);
 		
 		foreach ($blacklistedMailDomains as $domain) {
@@ -131,7 +134,7 @@ function validateUser($register_email, $register_ip, $checkemail = true) {
 	if (!$spammer) {
 		//Mail blacklist
 		if (elgg_get_plugin_setting('use_mail_blacklist', 'spam_login_filter') == "yes" && !$email_whitelisted) {
-			$blacklistedMails = preg_split('/\\s+/', customStripTags(elgg_get_plugin_setting('blacklisted_mails', 'spam_login_filter')), -1, PREG_SPLIT_NO_EMPTY);
+			$blacklistedMails = preg_split('/\\s+/', spam_login_filter_custom_strip_tags(elgg_get_plugin_setting('blacklisted_mails', 'spam_login_filter')), -1, PREG_SPLIT_NO_EMPTY);
 			
 			foreach ($blacklistedMails as $blacklistedMail) {
 				if ($blacklistedMail == $register_email) {
@@ -151,7 +154,7 @@ function validateUser($register_email, $register_ip, $checkemail = true) {
 			//check the e-mail adress
 			$url = "http://www.stopforumspam.com/api?email=".$register_email."&f=serial";
 			
-			$return = file_get_conditional_contents($url);
+			$return = spam_login_filter_file_get_conditional_contents($url);
 			
 			if ($return != false) {
 				$data = unserialize($return);
@@ -167,7 +170,7 @@ function validateUser($register_email, $register_ip, $checkemail = true) {
 			//e-mail not found in the database, now check the ip
 				$url = "http://www.stopforumspam.com/api?ip=".$register_ip."&f=serial";
 				
-				$return = file_get_conditional_contents($url);
+				$return = spam_login_filter_file_get_conditional_contents($url);
 				
 				if ($return != false) {
 					$data = unserialize($return);
@@ -189,9 +192,9 @@ function validateUser($register_email, $register_ip, $checkemail = true) {
 			$fassim_api_key = elgg_get_plugin_setting('fassim_api_key', 'spam_login_filter');
 			$fassim_check_email = elgg_get_plugin_setting('fassim_check_email', 'spam_login_filter');
 			$fassim_check_ip = elgg_get_plugin_setting('fassim_check_ip', 'spam_login_filter');
-			$fassim_block_proxies = elgg_get_plugin_setting('fassim_block_proxies', 'spam_login_filter');			
+			$fassim_block_proxies = elgg_get_plugin_setting('fassim_block_proxies', 'spam_login_filter');
 			$fassim_block_top_spamming_isps = elgg_get_plugin_setting('fassim_block_top_spamming_isps', 'spam_login_filter');
-			$fassim_block_top_spamming_domains = elgg_get_plugin_setting('fassim_block_top_spamming_domains', 'spam_login_filter');			
+			$fassim_block_top_spamming_domains = elgg_get_plugin_setting('fassim_block_top_spamming_domains', 'spam_login_filter');
 			$fassim_blocked_country_list = elgg_get_plugin_setting('fassim_blocked_country_list', 'spam_login_filter');
 			$fassim_blocked_region_list = elgg_get_plugin_setting('fassim_blocked_region_list', 'spam_login_filter');
 			
@@ -199,7 +202,7 @@ function validateUser($register_email, $register_ip, $checkemail = true) {
 
 				$url = 'http://api.fassim.com/regcheck.php?apikey='.$fassim_api_key.'&email='.$register_email."&ip=".$register_ip.'&proxy='.$fassim_block_proxies.'&topisp='.$fassim_block_top_spamming_isps.'&topdm='.$fassim_block_top_spamming_domains.'&cc='.$fassim_blocked_country_list.'&region='.$fassim_blocked_region_list.'&hostForumVersion=ELGG';
 			
-				$return = file_get_conditional_contents($url);
+				$return = spam_login_filter_file_get_conditional_contents($url);
 				
 				if ($return != false) {
 					$results = json_decode($return);
@@ -259,7 +262,7 @@ function validateUser($register_email, $register_ip, $checkemail = true) {
 	return !$spammer;
 }
 
-function file_get_conditional_contents($szURL)
+function spam_login_filter_file_get_conditional_contents($szURL)
 {
 	$pCurl = curl_init($szURL);
 	
@@ -285,10 +288,11 @@ function spam_login_filter_cron($hook, $entity_type, $returnvalue, $params){
 	$options = array(
 		"type" => "object",
 		"subtype" => "spam_login_filter_ip",
-		"created_time_upper" => $time_to_seek
+		"created_time_upper" => $time_to_seek,
+		"limit" => false
 	);
 	
-	elgg_set_ignore_access(true);
+	$ia = elgg_set_ignore_access(true);
 	
 	$spam_login_filter_ip_list = elgg_get_entities($options);
 
@@ -297,7 +301,7 @@ function spam_login_filter_cron($hook, $entity_type, $returnvalue, $params){
 			$ip_to_exclude->delete();
 		}
 	}
-	elgg_set_ignore_access(false);
+	elgg_set_ignore_access($ia);
 }
 
 /**
@@ -314,14 +318,14 @@ function spam_login_filter_hover_menu($hook, $type, $return, $params) {
 			'text' => elgg_echo("spam_login_filter:delete_and_report"),
 			'is_action' => true,
 			'section' => 'admin',
-		));	
+		));
 		$return[] = $item;
 	}
 	
 	return $return;
 }
 
-function customStripTags($content) {
+function spam_login_filter_custom_strip_tags($content) {
 	$searchSpaces = array(' ', '&nbsp;');
 	$content = str_replace($searchSpaces, '', $content);
 	$content = strip_tags($content);
@@ -360,27 +364,29 @@ function spam_login_filter_router($hook, $type, $return, $params) {
     $ip = spam_login_filter_get_ip();
     
     // we need to protect this page
-    //Check if the ip exists			
+    //Check if the ip exists
 	$options = array(
 		"type" => "object",
 		"subtype" => "spam_login_filter_ip",
-		"metadata_names" => "ip_address",
-        "metadata_values" => $ip,
+		"metadata_name_value_pairs" => array(
+			"name" => "ip_address",
+        	"value" => $ip,
+		),
 		"count" => TRUE
 	);
 	
-	elgg_set_ignore_access(true);
+	$ia = elgg_set_ignore_access(true);
 	
 	$spam_login_filter_ip_list = elgg_get_entities_from_metadata($options);
 	
-	elgg_set_ignore_access(false);
+	elgg_set_ignore_access($ia);
 
 	$deny = false;
 	if ($spam_login_filter_ip_list > 0) {
 		$deny = true;
     }
 	
-	if (!validateUser('', $ip, false)) {
+	if (!spam_login_filter_check_spammer('', $ip, false)) {
 		$deny = true;
 	}
 	
@@ -459,7 +465,7 @@ function spam_login_filter_login_event($event, $type, $user) {
     $check_login = elgg_get_plugin_setting('event_login', 'spam_login_filter');
     
     if ($check_login != 'no') { // do it by default
-        if (!validateUser($user->email, spam_login_filter_get_ip())) {
+        if (!spam_login_filter_check_spammer($user->email, spam_login_filter_get_ip())) {
             return false;
         }
     }

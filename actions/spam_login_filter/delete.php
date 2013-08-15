@@ -20,16 +20,18 @@
 	else {
 		if(elgg_get_plugin_setting('use_ip_blacklist_cache', 'spam_login_filter') == "yes"){
 			// Blacklist the IP
-			//Check if the ip exists			
+			//Check if the ip exists
 			$options = array(
 				"type" => "object",
 				"subtype" => "spam_login_filter_ip",
-				"metadata_names" => "ip_address",
-				"metadata_values" => $ip_address,
+				"metadata_name_value_pairs" => array(
+					"name" => "ip_address",
+					"value" => $ip_address,
+				),
 				"count" => TRUE
 			);
 
-			elgg_set_ignore_access(true);
+			$ia = elgg_set_ignore_access(true);
 			
 			$spam_login_filter_ip_list = elgg_get_entities_from_metadata($options);
 			
@@ -40,10 +42,11 @@
 				$ip->access_id = ACCESS_PRIVATE;
 				$ip->ip_address = $ip_address;
 				$ip->owner_guid = elgg_get_site_entity()->guid;
+				$ip->container_guid = elgg_get_site_entity()->guid;
 				$ip->save();
 			}
 			
-			elgg_set_ignore_access(false);
+			elgg_set_ignore_access($ia);
 		}
 	}
 	
@@ -58,7 +61,7 @@
 		if (!empty($ip_address) && !empty($api_key)){
 			//Report the spammer
 			$url = 'http://www.stopforumspam.com/add.php?username='.$username.'&ip_addr='.$ip_address.'&email='.$email.'&api_key='.$api_key;
-			$return = file_get_conditional_contents($url);
+			$return = spam_login_filter_file_get_conditional_contents($url);
 			
 			if ($return == false)
 			{
@@ -66,7 +69,7 @@
 				forward($forward);
 			}
 		}
-	}	
+	}
 
 	if (($obj instanceof ElggUser) && ($obj->canEdit())) {
 		if ($obj->delete()) {
