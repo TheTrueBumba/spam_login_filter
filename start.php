@@ -465,7 +465,7 @@ function spam_login_filter_login_event($event, $type, $user) {
     $check_login = elgg_get_plugin_setting('event_login', 'spam_login_filter');
     
     if ($check_login != 'no') { // do it by default
-        if (!spam_login_filter_check_spammer($user->email, spam_login_filter_get_ip())) {
+        if (!spam_login_filter_check_spammer($user->email, spam_login_filter_get_ip(), true)) {
             return false;
         }
     }

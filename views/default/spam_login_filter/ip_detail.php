@@ -1,6 +1,6 @@
 <?php
 
-$spam_login_filter_ip = elgg_extracT("spam_login_filter_ip", $vars);
+$spam_login_filter_ip = elgg_extract("spam_login_filter_ip", $vars);
 
 if (!$spam_login_filter_ip) {
 	return;
