@@ -70,6 +70,8 @@ Raison: %s.",
 			Ex : Pour protéger la page d'enregistrement, entrez 'register' sur une ligne
 			Les IPs en liste noire peuvent naviguer sur le site, mais verront une erreur '403 - Access denied' sur les pages protégées.",
 
+		'spam_login_filter:tracker:help' => "URL du site de traçage. Utilisez %s pour indiquer où doit être l'adresse IP.<br>Cette URL ne sera pas utilisée si le plugin \"IP Adress Tracker\" (http://community.elgg.org/plugins/446342/1.8.1/ip-address-tracker-plugin) est activé.",
+
 		//Configuration form - Titles
 		'spam_login_filter:title_stopforumspam' => "Stopforumspam",
 		'spam_login_filter:title_fassim' => "Fassim",
@@ -79,6 +81,7 @@ Raison: %s.",
 		'spam_login_filter:title_ip_blacklist' => "Liste noire d'IP",
 		'spam_login_filter:whitelist' => "Liste blanche",
 		'spam_login_filter:events' => "Évènements",
+		'spam_login_filter:tracker' => "Trackeur",
 
 
 		// Whitelist
