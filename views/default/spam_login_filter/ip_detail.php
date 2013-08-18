@@ -7,7 +7,7 @@ if (!$spam_login_filter_ip) {
 }
 
 $created = elgg_view_friendly_time($spam_login_filter_ip->time_created);
-$created_date = htmlspecialchars(date(elgg_echo("friendlytime:date_format"), $spam_login_filter_ip->time_created));
+$created_date = htmlspecialchars(strftime(elgg_echo("friendlytime:date_format"), $spam_login_filter_ip->time_created));
 
 $delete = elgg_view("output/confirmlink", array(
 	"confirm" => elgg_echo("spam_login_filter:admin:confirm_delete_ip", array($spam_login_filter_ip->ip_address)),
