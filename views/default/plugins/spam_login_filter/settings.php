@@ -179,3 +179,12 @@
 	
 	echo elgg_view_module("inline", $title, $content);
 	
+	// tracker
+    $title = elgg_echo("spam_login_filter:tracker");
+
+	$content = "<div class='mbs'>";
+	$content .= elgg_view("input/text", array("name" => "params[tracker_url]", "value" => $plugin->tracker_url ? $plugin->tracker_url : 'http://www.ip-address.org/lookup/ip-locator.php?track=%s'));
+	$content .= elgg_view("output/longtext", array("value" => elgg_echo("spam_login_filter:tracker:help") , "class" => "elgg-subtext"));
+	$content .= "</div>";
+
+	echo elgg_view_module("inline", $title, $content);
