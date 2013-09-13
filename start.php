@@ -391,10 +391,13 @@ function spam_login_filter_router($hook, $type, $return, $params) {
 	}
 	
 	if ($deny) {
-		ob_end_clean();
-		header($_SERVER['SERVER_PROTOCOL'] . ' 403 Forbidden');
-		echo "403 Forbidden";
-		exit;
+		header("HTTP/1.1 403 Forbidden");
+		
+		if (elgg_get_plugin_setting("custom_error_page", "spam_login_filter") == "yes") {
+			include(dirname(__FILE__) . "/pages/403.php");
+		}
+		
+		return false;
     }
 }
 

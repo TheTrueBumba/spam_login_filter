@@ -131,6 +131,16 @@
     $content .= elgg_view("output/longtext", array("value" => elgg_echo("spam_login_filter:protected_pages:help"), "class" => "elgg-subtext"));
 	$content .= "</div>";
 	
+	$custom_error_options = array(
+		"no" => elgg_echo("spam_login_filter:custom_error_page:no"),
+		"yes" => elgg_echo("spam_login_filter:custom_error_page:yes"),
+	);
+	
+	$content .= "<div class='mbm'>";
+	$content .= elgg_echo("spam_login_filter:custom_error_page");
+	$content .= elgg_view("input/dropdown", array("name" => "params[custom_error_page]", "value" => $plugin->custom_error_page, "options_values" => $custom_error_options, "class" => "mlm"));
+    $content .= "</div>";
+	
 	echo elgg_view_module("inline", $title, $content);
 	
 	// whitelist

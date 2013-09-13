@@ -70,6 +70,10 @@ Reason: %s.",
             eg. To protect the registration page enter 'register' on a line
             Blacklisted IPs can navigate to the site, but will see the error '403 error - Access denied' in protected pages.",
 		
+		'spam_login_filter:custom_error_page' => "In the event of a blocked page, show a custom error page",
+		'spam_login_filter:custom_error_page:no' => "No, use browser default",
+		'spam_login_filter:custom_error_page:yes' => "Yes, use a site page",
+		
 		//Configuration form - Titles
 		'spam_login_filter:title_stopforumspam' => "Stopforumspam",
 		'spam_login_filter:title_fassim' => "Fassim",
@@ -97,5 +101,8 @@ Reason: %s.",
 		'spam_login_filter:label:banned_metadata' => "Block login if metadata contains:",
 		'spam_login_filter:banned_metadata:help' => "This uses a 'contains' check, so be specific.  eg. if you list 'company' as a checked metadata above, and list 'inter' here, it will block anybody who has 'arck interactive' listed as a value for company",
 			
+		// forbidden page
+		'spam_login_filter:403' => "Access denied",
+		'spam_login_filter:403:description' => "You're not allowed to view this page. If you want to know more, please contact the site administrator and provide your IP address (%s) as reference.",
 	);
 	add_translation("en",$english);

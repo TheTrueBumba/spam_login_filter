@@ -1,5 +1,10 @@
 <?php
 $language = array (
+  'spam_login_filter:custom_error_page' => 'Als een pagina wordt geblokkeerd, toon dan een eigen fout pagina',
+  'spam_login_filter:custom_error_page:no' => 'Nee, gebruik de standaard browser pagina',
+  'spam_login_filter:custom_error_page:yes' => 'Ja, maak gebruik van een site pagina',
+  'spam_login_filter:403' => 'Toegang geweigerd',
+  'spam_login_filter:403:description' => 'Het is niet toegestaan dat je deze pagina bekijkt. Als je meer informatie wilt waarom deze pagina is gekomen, neem dan contact op met de site beheerder en stuur ook je IP adres (%s) mee als referentie.',
   'spam_login_filter:access_denied_domain_blacklist' => 'Toegang is geweigerd vanwege spam problemen (domein blacklist). Neem contact op met de site beheerder',
   'spam_login_filter:access_denied_mail_blacklist' => 'Toegang is geweigerd vanwege spam problemen (e-mail blacklist). Neem contact op met de site beheerder',
   'spam_login_filter:access_denied_ip_blacklist' => 'Toegang is geweigerd vanwege spam problemen (IP blacklist). Neem contact op met de site beheerder',
