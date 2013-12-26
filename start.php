@@ -301,7 +301,7 @@ function spam_login_filter_cron($hook, $entity_type, $returnvalue, $params){
 		"type" => "object",
 		"subtype" => "spam_login_filter_ip",
 		"created_time_upper" => $time_to_seek,
-		"limit" => 300
+		"limit" => false
 	);
 	
 	elgg_set_ignore_access(true);
