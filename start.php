@@ -469,7 +469,9 @@ function spam_login_filter_login_event($event, $type, $user) {
     
     if ($check_login != 'no') { // do it by default
         if (!spam_login_filter_check_spammer($user->email, spam_login_filter_get_ip(), true)) {
-            return false;
+        	register_error(elgg_echo('spam_login_filter:access_denied_mail_blacklist'));
+        	spam_login_filter_notify_admin($user->email, $register_ip, "Existing member identified as spammer has tried to login, check this account");
+		return false;
         }
     }
 	
