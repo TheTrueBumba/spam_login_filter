@@ -38,9 +38,6 @@
 	$form_body .= "<tr>";
 	$form_body .= "<th>" . elgg_echo("spam_login_filter:admin:ip_address") . "</th>";
 	$form_body .= "<th colspan=2>" . elgg_echo("spam_login_filter:admin:ip_date_created") . "</th>";
-	if (elgg_is_active_plugin("tracker")) {
-		$form_body .= "<th>" . elgg_echo("tracker:moreinfo") . "</th>";
-	}
 	$form_body .= "<th class='center'>" . elgg_echo("delete") . "</th>";
 	$form_body .= "</tr>";
 	

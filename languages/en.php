@@ -70,6 +70,8 @@ Reason: %s.",
             eg. To protect the registration page enter 'register' on a line
             Blacklisted IPs can navigate to the site, but will see the error '403 error - Access denied' in protected pages.",
 		
+		'spam_login_filter:tracker:help' => "URL for trace website. Use %s to indicate where the IP should be.<br>This URL will be overridden by plugin \"IP Adress Tracker\" (http://community.elgg.org/plugins/446342/1.8.1/ip-address-tracker-plugin) if this one is activated.",
+
 		'spam_login_filter:custom_error_page' => "In the event of a blocked page, show a custom error page",
 		'spam_login_filter:custom_error_page:no' => "No, use browser default",
 		'spam_login_filter:custom_error_page:yes' => "Yes, use a site page",
@@ -83,6 +85,7 @@ Reason: %s.",
 		'spam_login_filter:title_ip_blacklist' => "IP Blacklist",
         'spam_login_filter:whitelist' => "Whitelists",
         'spam_login_filter:events' => "Events",
+        'spam_login_filter:tracker' => "Tracker",
         
         
         // Whitelist

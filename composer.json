@@ -1,0 +1,19 @@
+{
+	"name": "thetruebumba/spam_login_filter",
+	"type": "elgg-plugin",
+	"description": "Elgg plugin that validates login against blacklist databases. You need the tracker plugin to use the \"report as spammer\" feature.",
+	"homepage": "https://github.com/TheTrueBumba/spam_login_filter",
+	"keywords": ["elgg", "plugin", "spam", "analyzer"],
+	"license": "GPL-2.0",
+	"authors": [
+		{
+			"name": "Ray J"
+		}
+	],
+	"support": {
+		"issues": "https://github.com/TheTrueBumba/spam_login_filter/issues"
+	},
+	"require": {
+		"composer/installers": ">=1.0.8"
+	}
+}
