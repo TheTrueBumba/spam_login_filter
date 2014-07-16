@@ -431,9 +431,22 @@ function spam_login_filter_is_ip_whitelisted($ip = false) {
     $whitelist = explode("\n", $whitelist);
     $whitelist = array_map('trim', $whitelist);
     
-    if (in_array($ip, $whitelist)) {
-        return true; // we're whitelisted!
-    }
+    foreach ($whitelist as $w) {
+		$list_parts = explode('.', $w);
+		$ip_parts = explode('.', $ip);
+		
+		$match = true;
+		foreach ($list_parts as $key => $val) {
+			if ($val != $ip_parts[$key] && $val != '*') {
+				$match = false;
+			}
+		}
+		
+		if ($match) {
+			return true;
+		}
+	}
+    
     
     return false;
 }

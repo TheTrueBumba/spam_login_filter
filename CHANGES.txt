@@ -1,5 +1,9 @@
 Validate login against blacklist databases.
 
+07/15/2014
+- Add IP address whitelist wildcard
+- Move readme.txt to CHANGES.txt
+
 07/24/2013
 - fix for Fatal Exception when notify admin is set with invalid email address
 - general code cleanup

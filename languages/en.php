@@ -90,7 +90,7 @@ Reason: %s.",
         
         // Whitelist
         'spam_login_filter:whitelist:ip' => "Whitelist IP addresses",
-        'spam_login_filter:whitelist:ip:help' => "Enter one IP per line.  IP addresses listed here will not be denied access.",
+        'spam_login_filter:whitelist:ip:help' => "Enter one IP per line.  IP addresses listed here will not be denied access. Use * as a wildcard to whitelist ranges.  eg. 192.168.0.* or 192.168.*.*",
         'spam_login_filter:whitelist:email' => "Whitelist email addresses",
         'spam_login_filter:whitelist:email:help' => "Enter one email per line.  Email addresses listed here will not be denied at registration/login.",
         'spam_login_filter:whitelist:email:domain' => "Whitelist email domains",
