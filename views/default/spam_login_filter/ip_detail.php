@@ -39,7 +39,6 @@ if (elgg_is_active_plugin("tracker")) {
 	$ip_with_tracker_link = $spam_login_filter_ip->ip_address;
 }
 
-
 echo "<tr>";
 echo "<td>" . $ip_with_tracker_link . "</td>";
 echo "<td>" . $created . "</td>";
