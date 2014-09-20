@@ -1,18 +1,24 @@
 Validate login against blacklist databases.
 
+09/20/2014
+- Made sure it works on Elgg 1.9 (fixed one deprecation issue),
+- Made cronjob for cleaning IP addresses cache to work correctly,
+- Code cleanup,
+- Some little rework in translations (mainly for plugin settings page),
+- German translations added.
+
 07/15/2014
-- Add IP address whitelist wildcard
-- Move readme.txt to CHANGES.txt
+- Add IP address whitelist wildcard,
+- Move readme.txt to CHANGES.txt.
 
 07/24/2013
-- fix for Fatal Exception when notify admin is set with invalid email address
-- general code cleanup
-- adds support for cloud hosting/load balancers for getting IP address
-- support for protecting multiple configurable pages with IP cache
-- support for whitelisting IP addresses and emails
-- support for spam check on login (to catch spammers reported since initial registration)
-These fixes/improvements funded by Connecting Conservation
-
+- Fix for Fatal Exception when notify admin is set with invalid email address,
+- General code cleanup,
+- Adds support for cloud hosting/load balancers for getting IP address,
+- Support for protecting multiple configurable pages with IP cache,
+- Support for whitelisting IP addresses and emails,
+- Support for spam check on login (to catch spammers reported since initial registration).
+These fixes/improvements funded by Connecting Conservation.
 
 02/06/2013
-- fix for blocked IP address pagination funded by: Connecting Conservation
+- Fix for blocked IP address pagination funded by: Connecting Conservation.
